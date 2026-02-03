@@ -29,19 +29,19 @@ func New(cfg *config.Config, logger *zerolog.Logger) (*Server, error) {
 		return nil, fmt.Errorf("failed to initialize database: %w", err)
 	}
 
-	// Redis client with New Relic integration
-	redisClient := redis.NewClient(&redis.Options{
-		Addr: cfg.Redis.Address,
-	})
+	// // Redis client with New Relic integration
+	// redisClient := redis.NewClient(&redis.Options{
+	// 	Addr: cfg.Redis.Address,
+	// })
 
-	// Test Redis connection
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
+	// // Test Redis connection
+	// ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	// defer cancel()
 
-	if err := redisClient.Ping(ctx).Err(); err != nil {
-		logger.Error().Err(err).Msg("Failed to connect to Redis, continuing without Redis")
-		// Don't fail startup if Redis is unavailable
-	}
+	// if err := redisClient.Ping(ctx).Err(); err != nil {
+	// 	logger.Error().Err(err).Msg("Failed to connect to Redis, continuing without Redis")
+	// 	// Don't fail startup if Redis is unavailable
+	// }
 
 	// job service
 	jobService := job.NewJobService(logger, cfg)
@@ -56,7 +56,7 @@ func New(cfg *config.Config, logger *zerolog.Logger) (*Server, error) {
 		Config: cfg,
 		Logger: logger,
 		DB:     db,
-		Redis:  redisClient,
+		// Redis:  redisClient,
 		Job:    jobService,
 	}
 
