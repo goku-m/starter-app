@@ -1,0 +1,64 @@
+{{extends "./layouts/base.jet"}}
+
+{{block browserTitle()}}Home{{end}}
+
+{{block pageContent()}}
+
+<div  class="flex justify-end mb-4">
+<a
+  href="/create"
+  class="inline-flex items-center rounded bg-green-400 px-4 py-2 text-sm font-medium text-white hover:bg-green-600 dark:bg-green-900 dark:text-white"
+>
+  Add
+</a>
+
+</div>
+
+    <div class="mt-6 flow-root">
+    
+
+{{ if len(.Data.todos) == 0 }}
+  <p>No todos yet.</p>
+{{ else }}
+  <ul>
+    {{ range (.Data.todos) }}
+      <li style="margin-bottom: 1rem;">
+ <div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 py-4 px-6">
+  <div class="-my-6 divide-y divide-gray-200 dark:divide-gray-800">
+    
+    <div class="space-y-4 py-6 md:py-8">
+      <div class="grid gap-4">
+        {{ if .Priority }}
+        <div>
+          <span class="inline-block rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300">
+            {{ .Priority }}
+          </span>
+        </div>
+        {{ end }}
+
+        <a
+          href="/update/{{ .ID }}"
+          class="text-xl font-semibold text-gray-900  dark:text-white"
+        >
+          {{ .Title }}
+        </a>
+      </div>
+
+      {{ if .Description }}
+      <p class="text-base font-normal text-gray-500 dark:text-gray-400">
+        {{ .Description }}
+      </p>
+      {{ end }}
+
+  
+    </div>
+
+  </div>
+</div>
+
+      </li>
+    {{ end }}
+  </ul>
+{{ end }}
+
+{{end}}

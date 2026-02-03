@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+
+    <!-- Load Clerk -->
+    <script 
+        data-clerk-publishable-key="pk_test_b3JnYW5pYy1idW5ueS0yOS5jbGVyay5hY2NvdW50cy5kZXYk"
+        src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@4/dist/clerk.browser.js">
+    </script>
+</head>
+
+<body class="min-h-screen w-full flex items-center justify-center bg-gray-100">
+
+    <div id="sign-in" class="flex justify-center"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            await Clerk.load();
+
+            Clerk.mountSignIn(document.getElementById("sign-in"), {
+                redirectUrl: "/",
+            });
+        });
+    </script>
+
+</body>
+</html>

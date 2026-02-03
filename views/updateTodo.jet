@@ -1,0 +1,65 @@
+{{extends "./layouts/base.jet"}}
+
+{{block browserTitle()}}Edit Todo{{end}}
+
+{{block pageContent()}}
+
+<div  class="flex justify-end mb-4">
+ <form method="POST" action="/api/todos/delete">
+        <input type="hidden" name="id" value="{{ .Data.todo.ID }}">
+        <button
+          type="submit"
+          class="inline-flex items-center rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+        >
+          Delete
+        </button>
+      </form>
+</div>
+<form method="POST" action="/api/todos/update/{{ .Data.todo.ID }}">
+
+    <div style="margin-bottom: 1rem;">
+            <label for="first_name" class="block mb-2.5 text-sm font-medium text-heading">Title</label>
+            <input type="text" name="title" value="{{ .Data.todo.Title }}" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded   block w-full px-3 py-2.5 shadow-xs placeholder:text-body"  required />
+        </div>
+
+    <div style="margin-bottom: 1rem;">
+           
+<label for="message" class="block mb-2.5 text-sm font-medium text-heading">Description</label>
+<textarea name="description" rows="4" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body" >{{ .Data.todo.Description }}</textarea>
+
+        </div>
+
+
+  <div style="margin-bottom: 1rem;">
+    <label>Priority</label><br>
+   <select name="priority" class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
+    <option value="low" {{ if .Data.todo.Priority == "low" }}selected{{ end }}>low</option>
+      <option value="medium" {{ if .Data.todo.Priority == "medium" }}selected{{ end }}>medium</option>
+      <option value="high" {{ if .Data.todo.Priority == "high" }}selected{{ end }}>high</option>
+  </select>
+  </div>
+
+
+  <div style="margin-bottom: 1rem;">
+    <label>Status</label><br>
+     <select name="status" class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
+      <option value="draft" {{ if .Data.todo.Status == "draft" }}selected{{ end }}>draft</option>
+      <option value="active" {{ if .Data.todo.Status == "active" }}selected{{ end }}>active</option>
+      <option value="completed" {{ if .Data.todo.Status == "completed" }}selected{{ end }}>completed</option>
+      <option value="archived" {{ if .Data.todo.Status == "archived" }}selected{{ end }}>archived</option>
+    </select>
+  </div>
+
+
+
+   <button
+      type="submit"
+      class="inline-flex items-center rounded-md bg-green-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+    >
+      Update
+    </button>
+  <a href="/" style="margin-left: 0.75rem;">Cancel</a>
+</form>
+
+
+{{end}}

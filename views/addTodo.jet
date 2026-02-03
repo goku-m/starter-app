@@ -1,0 +1,35 @@
+{{extends "./layouts/base.jet"}}
+
+{{block browserTitle()}}Add Todo{{end}}
+
+{{block pageContent()}}
+
+
+
+
+
+<form method="POST" action="/api/todos/create">
+  <div style="margin-bottom: 1rem;">
+    <label>Title</label><br>
+    <input type="text" name="title" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded   block w-full px-3 py-2.5 shadow-xs placeholder:text-body" required>
+  </div>
+
+  <div style="margin-bottom: 1rem;">
+    <label>Description</label><br>
+    <textarea name="description" rows="4" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body"></textarea>
+  </div>
+
+  <div style="margin-bottom: 1rem;">
+    <label>Priority</label><br>
+    <select name="priority" class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
+      <option value="low">low</option>
+      <option value="medium">medium</option>
+      <option value="high">high</option>
+    </select>
+  </div>
+
+  <button type="submit"   class="inline-flex items-center rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400">Create</button>
+  <a href="/" style="margin-left: 0.75rem;">Cancel</a>
+</form>
+
+{{end}}

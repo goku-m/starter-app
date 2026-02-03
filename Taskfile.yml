@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=.vscode/taskfile.schema.json
+
+
+version: "3"
+
+dotenv:
+  - .env
+
+vars:
+  STARTER_DSN: '{{.STARTER_DSN | default ""}}'
+
+tasks:
+  help:
+    desc: print this help message
+    cmds:
+      - task --list-all
+    silent: true
+
+  confirm:
+    desc: confirmation prompt
+    cmds:
+      - |
+        echo -n 'Are you sure? [y/N] ' && read ans && [ ${ans:-N} = y ]
+    silent: true
+    internal: true
+
+  run:
+    desc: run the cmd/starter application
+    cmds:
+      - go run ./cmd/starter
+
+  migrations:new:
+    desc: create a new database migration
+    vars:
+      NAME: '{{.name | default ""}}'
+    cmds:
+      - |
+        if [ -z "{{.NAME}}" ]; then
+          echo "Error: name parameter is required"
+          echo "Usage: task migrations:new name=migration_name"
+          exit 1
+        fi
+      - echo 'Creating migration file for {{.NAME}}...'
+      - tern new -m ./internal/database/migrations {{.NAME}}
+
+  migrations:up:
+    desc: apply all up database migrations
+   
+    cmds:
+      - echo 'Running up migrations...'
+      -  echo "STARTER_DSN='{{.STARTER_DSN}}'"
+      - tern migrate -m ./internal/database/migrations --conn-string {{.STARTER_DSN}}
+
+  tidy:
+    desc: format all .go files, and tidy and vendor module dependencies
+    cmds:
+      - echo 'Formatting .go files...'
+      - go fmt ./...
+      - echo 'Tidying module dependencies...'
+      - go mod tidy
+      - echo 'Verifying dependencies...'
+      - go mod verify
